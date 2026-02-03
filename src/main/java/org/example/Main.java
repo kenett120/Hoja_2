@@ -6,17 +6,46 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Scanner;
+
 public class Main implements Calc {
+    private Stack<Token> stack;
+
+    public Main() {
+        // Default to StackArrayList
+        this.stack = new StackArrayList<>();
+    }
+
+    public void setStackImplementation(Stack<Token> stack) {
+        this.stack = stack;
+    }
+
     public static void main(String[] args) {
         Main calc = new Main();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Seleccione la implementación de pila:");
+        System.out.println("1. ArrayList");
+        System.out.println("2. Vector (Array)");
+        System.out.print("Opción: ");
+
+        int option = 0;
+        try {
+             String input = scanner.nextLine();
+             option = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Opción inválida, usando ArrayList por defecto.");
+        }
+
+        if (option == 2) {
+            calc.setStackImplementation(new StackArray<>());
+            System.out.println("Usando StackArray.");
+        } else {
+            System.out.println("Usando StackArrayList.");
+        }
 
         // Option 1: Read operations from file
         calc.processFile("datos.txt");
-
-        // Option 2: Direct operations (uncomment to use)
-        // System.out.println("1 2 + = " + calc.operate("1 2 +"));
-        // System.out.println("5 3 + 2 * = " + calc.operate("5 3 + 2 *"));
-        // System.out.println("10 2 - 4 / = " + calc.operate("10 2 - 4 /"));
     }
 
     /**
@@ -64,6 +93,15 @@ public class Main implements Calc {
     @Override
     public double operate(String input) {
         List<Token> tokens = new Parser().parse(input);
-        return new Calculator().operate(tokens);
+        // Create a new instance of the stack for each operation to avoid state pollution
+        // We need to create a new instance of the same type as this.stack
+        Stack<Token> currentOperationStack;
+        if (this.stack instanceof StackArray) {
+            currentOperationStack = new StackArray<>();
+        } else {
+            currentOperationStack = new StackArrayList<>();
+        }
+        
+        return new Calculator(currentOperationStack).operate(tokens);
     }
 }

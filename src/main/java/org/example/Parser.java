@@ -23,6 +23,11 @@ public class Parser {
             if (isOperator) {
                 token = new Token("OPERATOR", value);
             } else {
+                try {
+                    Double.parseDouble(value);
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Carácter inválido: " + value);
+                }
                 token = new Token("OPERAND", value);
             }
             tokens.add(token);
