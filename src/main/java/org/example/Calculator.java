@@ -3,12 +3,22 @@ package org.example;
 import java.util.HashMap;
 import java.util.List;
 
-
+/**
+ * Functional interface for binary operations
+ */
 interface Operation {
+    /**
+     * Performs a binary operation
+     * @param a First operand
+     * @param b Second operand
+     * @return Result of the operation
+     */
     double operate(double a, double b);
 }
 
-
+/**
+ * Calculator that evaluates postfix expressions using a stack
+ */
 public class Calculator {
     HashMap<String, Operation> operators = new HashMap<>() {{
         put("+", (a, b) -> {
@@ -26,6 +36,12 @@ public class Calculator {
 
     }};
 
+    /**
+     * Evaluates a list of tokens in postfix notation
+     * @param tokens List of tokens representing a postfix expression
+     * @return Result of the evaluation
+     * @throws RuntimeException if expression is invalid
+     */
     public double operate(List<Token> tokens) {
         Stack<Token> stack = new StackArrayList<>();
         for (int i = 0; i < tokens.size(); i++) {

@@ -3,7 +3,15 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Parses a string input into a list of tokens
+ */
 public class Parser {
+    /**
+     * Parses a postfix expression string into tokens
+     * @param input Space-separated postfix expression
+     * @return List of tokens (operands and operators)
+     */
     public List<Token> parse(String input){
       String[]  values = input.split(" ");
         List<Token> tokens = new ArrayList<>();

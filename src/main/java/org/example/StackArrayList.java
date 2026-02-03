@@ -3,6 +3,10 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Stack implementation using ArrayList
+ * @param <T> Type of elements stored in the stack
+ */
 public class StackArrayList<T> implements Stack<T> {
     int MAX_INITIAL_LENGTH = 10;
     List<T> items;
