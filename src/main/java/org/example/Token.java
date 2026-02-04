@@ -1,5 +1,8 @@
 package org.example;
 
+/**
+ * Represents a token in a postfix expression
+ */
 public class Token {
     public String type;
     public String value;

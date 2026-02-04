@@ -1,0 +1,47 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+interface Calc << interface >> {
+  + operate(String): double
+}
+class Calculator {
+  + Calculator(): 
+  + operate(List<Token>): double
+}
+class Main {
+  + Main(): 
+  + main(String[]): void
+  + readFile(String): List<String>
+  + operate(String): double
+  + processFile(String): void
+}
+interface Operation << interface >> {
+  + operate(double, double): double
+}
+class Parser {
+  + Parser(): 
+  + parse(String): List<Token>
+}
+interface Stack<T> << interface >> {
+  + peek(): T
+  + push(T): void
+  + pop(): T
+}
+class StackArrayList<T> {
+  + StackArrayList(int): 
+  + StackArrayList(): 
+  + push(T): void
+  + pop(): T
+  + peek(): T
+}
+class Token {
+  + Token(String, String): 
+  + toString(): String
+}
+
+Main            -[#008200,dashed]-^  Calc           
+StackArrayList  -[#008200,dashed]-^  Stack          
+@enduml
